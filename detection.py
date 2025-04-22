@@ -68,7 +68,7 @@ if test_image is not None:
             ff_glu = True,              
             residual_attn = True   
         )
-        model = ViT(
+        model1 = ViT(
             dim=128,
             image_size=224,
             patch_size=32,
@@ -77,26 +77,26 @@ if test_image is not None:
             channels=1,
         )
 
-        model.load_state_dict(model_selected)
-        model.to(device)
-        model.eval()
+        model1.load_state_dict(model_selected)
+        model1.to(device)
+        model1.eval()
 
         uploaded_image = uploaded_image.convert("L")
 
-        transform = transforms.Compose([
+        transform1 = transforms.Compose([
             transforms.Resize((256, 256)),  # Change size if needed
             transforms.CenterCrop(224),
             transforms.ToTensor(),  # Convert to tensor
             #transforms.Normalize(mean=[0.485, 0.456, 0.406],  # Use dataset-specific values
             #                std=[0.229, 0.224, 0.225]),
         ])
-        input_tensor = transform(uploaded_image).unsqueeze(0).to(device)  # Add batch dimension
+        input_tensor = transform1(uploaded_image).unsqueeze(0).to(device)  # Add batch dimension
         
         class_names = ["Normal - No Alzheimer's Detected", "Alzheimer Detected"]
 
         # Predict for pytorch model
         with torch.no_grad():
-            output = model(input_tensor)
+            output = model1(input_tensor)
             prediction = torch.argmax(output, dim=1)
             predicted_index = prediction.item()
             predicted_class = class_names[predicted_index]
