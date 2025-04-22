@@ -44,7 +44,7 @@ if test_image is not None:
     if model_filename.endswith('.keras'):
         # Make a prediction
         img_array = uploaded_image.resize((208, 176))
-        img_array = image.img_to_array(uploaded_image)
+        img_array = image.img_to_array(img_array)
         img_array = np.expand_dims(img_array, axis=0)
 
         prediction = model_selected.predict(img_array)
